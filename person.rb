@@ -1,5 +1,10 @@
-class Person
+require './nameable'
+require './capitalize_decorator'
+require './trimmer_decorator'
+
+class Person < Nameable
   def initialize(id, age, name = 'Unknown', parent_permission: true)
+    super()
     @id = id
     @name = name
     @age = age
@@ -10,7 +15,7 @@ class Person
   attr_accessor :name, :age
 
   def can_use_services?
-    if is_of_age? || @parent_permission
+    if of_age? || @parent_permission
       true
     else
       false
@@ -19,6 +24,10 @@ class Person
 
   def of_age?
     @age >= 18
+  end
+
+  def correct_name
+    @name
   end
 
   private :of_age?
