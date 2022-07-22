@@ -29,32 +29,18 @@ class App
   end
 
   # Method for run by selection of user
-  def user_select
+  def user_select # rubocop:disable Metrics/CyclomaticComplexity
     selection = gets.chomp
     case selection
-    when '1'
-      list_books
-      run
-    when '2'
-      list_people
-      run
-    when '3'
-      create_person
-      run
-    when '4'
-      create_book
-      run
-    when '5'
-      create_rental
-      run
-    when '6'
-      list_rental
-      run
-    when '7'
-      abort
+    when '1' then list_books
+    when '2' then list_people
+    when '3' then create_person
+    when '4' then create_book
+    when '5' then create_rental
+    when '6' then list_rental
+    when '7' then abort
     else
       puts 'Please Select a correct number'
-      run
     end
   end
 
@@ -68,6 +54,7 @@ class App
     @books.push(book)
     puts 'Book created successfully'
     puts
+    run
   end
 
   # Method to create student or teacher and push into the people array
@@ -76,63 +63,30 @@ class App
     selection = gets.chomp
     case selection
     when '1'
-      print 'Student Classroom: '
-      classroom = gets.chomp
-      print 'Student age: '
-      age = gets.chomp
-      print 'Student Name: '
-      name = gets.chomp
-      print 'Has parent permission? [Y/N]: '
-      permission = gets.chomp
-      case permission
-      when 'y' || 'Y'
-        student = Student.new(classroom, age, name, parent_permission: true)
-        @people.push(student)
-      when 'n' || 'N'
-        student = Student.new(classroom, age, name, parent_permission: false)
-        @people.push(student)
-      else
-        puts 'Wrong selection on parent permission please try add again'
-      end
-      puts 'Student added successfully'
+      create_student
     when '2'
-      print 'Teacher Specialization: '
-      specialization = gets.chomp
-      print 'Teacher age: '
-      age = gets.chomp
-      print 'Teacher Name: '
-      name = gets.chomp
-      teacher = Teacher.new(specialization, age, name)
-      @people.push(teacher)
-      puts 'Teacher added successfully'
+      create_teacher
     else
       puts 'Wrong input selection please try again'
     end
     puts
+    run
   end
 
   # Method to create rental and push into the rentals array
   def create_rental
     puts 'Select a book from the following list by number'
-    books.each_with_index do |book, idx|
-      puts "#{idx}) Title: #{book.title}  Author: #{book.author}"
-    end
+    books_to_select
     selection_book = books[gets.chomp.to_i]
     puts 'Select a person from the following list by number (not id)'
-    people.each_with_index do |people, idx|
-      case people.class.name
-      when 'Student'
-        puts "#{idx}) [Student] Name: #{people.name}, ID: #{people.id} Age: #{people.age}"
-      else
-        puts "#{idx}) [Teacher] Name: #{people.name}, ID: #{people.id} Age: #{people.age}"
-      end
-    end
+    people_to_select
     selection_person = people[gets.chomp.to_i]
     print 'Please write the date: '
     selection_date = gets.chomp
     rental = Rental.new(selection_date, selection_person, selection_book)
     @rentals.push(rental)
     puts 'Rental created successfully'
+    run
   end
 
   # Show all books
@@ -141,6 +95,7 @@ class App
       puts "Title: #{book.title}  Author: #{book.author}"
     end
     puts
+    run
   end
 
   # Show all students and teachers
@@ -154,6 +109,7 @@ class App
       end
     end
     puts
+    run
   end
 
   def list_rental
@@ -167,5 +123,59 @@ class App
       end
     end
     puts
+    run
+  end
+
+  # Helpful Methods to reduce code
+
+  def books_to_select
+    books.each_with_index do |book, idx|
+      puts "#{idx}) Title: #{book.title}  Author: #{book.author}"
+    end
+  end
+
+  def people_to_select
+    people.each_with_index do |people, idx|
+      case people.class.name
+      when 'Student'
+        puts "#{idx}) [Student] Name: #{people.name}, ID: #{people.id} Age: #{people.age}"
+      else
+        puts "#{idx}) [Teacher] Name: #{people.name}, ID: #{people.id} Age: #{people.age}"
+      end
+    end
+  end
+
+  def create_student
+    print 'Student Classroom: '
+    classroom = gets.chomp
+    print 'Student age: '
+    age = gets.chomp
+    print 'Student Name: '
+    name = gets.chomp
+    print 'Has parent permission? [Y/N]: '
+    permission = gets.chomp
+    case permission
+    when 'y' || 'Y'
+      student = Student.new(classroom, age, name, parent_permission: true)
+      @people.push(student)
+    when 'n' || 'N'
+      student = Student.new(classroom, age, name, parent_permission: false)
+      @people.push(student)
+    else
+      puts 'Wrong selection on parent permission please try add again'
+    end
+    puts 'Student added successfully'
+  end
+
+  def create_teacher
+    print 'Teacher Specialization: '
+    specialization = gets.chomp
+    print 'Teacher age: '
+    age = gets.chomp
+    print 'Teacher Name: '
+    name = gets.chomp
+    teacher = Teacher.new(specialization, age, name)
+    @people.push(teacher)
+    puts 'Teacher added successfully'
   end
 end
