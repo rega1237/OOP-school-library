@@ -31,36 +31,29 @@ class App
   # Method for run by selection of user
   def user_select
     selection = gets.chomp
-    if selection === '1'
-      puts
+    case selection
+    when '1'
       list_books
       run
-    elsif selection === '2'
-      puts
+    when '2'
       list_people
       run
-    elsif selection === '3'
-      puts
+    when '3'
       create_person
       run
-    elsif selection === '4'
-      puts
+    when '4'
       create_book
       run
-    elsif selection === '5'
-      puts
+    when '5'
       create_rental
       run
-    elsif selection === '6'
-      puts
+    when '6'
       list_rental
       run
-    elsif selection === '7'
+    when '7'
       abort
     else
-      puts
       puts 'Please Select a correct number'
-      puts
       run
     end
   end
@@ -73,7 +66,6 @@ class App
     autor = gets.chomp
     book = Book.new(titulo, autor)
     @books.push(book)
-    puts
     puts 'Book created successfully'
     puts
   end
@@ -82,8 +74,8 @@ class App
   def create_person
     print 'Do you want to create a student (1) or a Teacher (2)? [Input the number]: '
     selection = gets.chomp
-    puts
-    if selection === '1'
+    case selection
+    when '1'
       print 'Student Classroom: '
       classroom = gets.chomp
       print 'Student age: '
@@ -92,18 +84,18 @@ class App
       name = gets.chomp
       print 'Has parent permission? [Y/N]: '
       permission = gets.chomp
-      if permission === 'y' || permission === 'Y'
+      case permission
+      when 'y' || 'Y'
         student = Student.new(classroom, age, name, parent_permission: true)
         @people.push(student)
-      elsif permission === 'n' || permission === 'N'
+      when 'n' || 'N'
         student = Student.new(classroom, age, name, parent_permission: false)
         @people.push(student)
       else
         puts 'Wrong selection on parent permission please try add again'
       end
-      puts
       puts 'Student added successfully'
-    elsif selection === '2'
+    when '2'
       print 'Teacher Specialization: '
       specialization = gets.chomp
       print 'Teacher age: '
@@ -112,7 +104,6 @@ class App
       name = gets.chomp
       teacher = Teacher.new(specialization, age, name)
       @people.push(teacher)
-      puts
       puts 'Teacher added successfully'
     else
       puts 'Wrong input selection please try again'
@@ -123,30 +114,25 @@ class App
   # Method to create rental and push into the rentals array
   def create_rental
     puts 'Select a book from the following list by number'
-    puts
     books.each_with_index do |book, idx|
       puts "#{idx}) Title: #{book.title}  Author: #{book.author}"
     end
     selection_book = books[gets.chomp.to_i]
-    puts
     puts 'Select a person from the following list by number (not id)'
-    puts
     people.each_with_index do |people, idx|
-      if people.class.name === 'Student'
+      case people.class.name
+      when 'Student'
         puts "#{idx}) [Student] Name: #{people.name}, ID: #{people.id} Age: #{people.age}"
       else
         puts "#{idx}) [Teacher] Name: #{people.name}, ID: #{people.id} Age: #{people.age}"
       end
     end
     selection_person = people[gets.chomp.to_i]
-    puts
     print 'Please write the date: '
     selection_date = gets.chomp
     rental = Rental.new(selection_date, selection_person, selection_book)
     @rentals.push(rental)
-    puts
     puts 'Rental created successfully'
-    puts
   end
 
   # Show all books
@@ -160,7 +146,8 @@ class App
   # Show all students and teachers
   def list_people
     people.each do |people|
-      if people.class.name === 'Student'
+      case people.class.name
+      when 'Student'
         puts "[Student] Name: #{people.name}, ID: #{people.id} Age: #{people.age}"
       else
         puts "[Teacher] Name: #{people.name}, ID: #{people.id} Age: #{people.age}"
@@ -172,20 +159,13 @@ class App
   def list_rental
     print 'ID of person: '
     select_id = gets.chomp
-    puts
     puts 'Rentals:'
     rentals.each do |rental|
-      if rental.person.id === select_id.to_i
+      case rental.person.id
+      when select_id.to_i
         puts "Name: #{rental.person.name} Book: #{rental.book.title} Date: #{rental.date}"
       end
     end
     puts
   end
 end
-
-def main
-  app = App.new
-  app.run
-end
-
-main
