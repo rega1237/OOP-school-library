@@ -13,22 +13,6 @@ class App
     @rentals = []
   end
 
-  # Method for run by selection of user
-  def user_select # rubocop:disable Metrics/CyclomaticComplexity
-    selection = gets.chomp
-    case selection
-    when '1' then list_books
-    when '2' then list_people
-    when '3' then create_person
-    when '4' then create_book
-    when '5' then create_rental
-    when '6' then list_rental
-    when '7' then abort
-    else
-      puts 'Please Select a correct number'
-    end
-  end
-
   # Method to create a book and push into the array
   def create_book
     print 'Book Title: '
@@ -39,7 +23,6 @@ class App
     @books.push(book)
     puts 'Book created successfully'
     puts
-    run
   end
 
   # Method to create student or teacher and push into the people array
@@ -55,7 +38,6 @@ class App
       puts 'Wrong input selection please try again'
     end
     puts
-    run
   end
 
   # Method to create rental and push into the rentals array
@@ -71,7 +53,6 @@ class App
     rental = Rental.new(selection_date, selection_person, selection_book)
     @rentals.push(rental)
     puts 'Rental created successfully'
-    run
   end
 
   # Show all books
@@ -80,7 +61,6 @@ class App
       puts "Title: #{book.title}  Author: #{book.author}"
     end
     puts
-    run
   end
 
   # Show all students and teachers
@@ -94,7 +74,6 @@ class App
       end
     end
     puts
-    run
   end
 
   def list_rental
@@ -108,7 +87,6 @@ class App
       end
     end
     puts
-    run
   end
 
   # Helpful Methods to reduce code

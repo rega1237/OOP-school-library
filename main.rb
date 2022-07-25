@@ -20,5 +20,35 @@ class Main
   end
 end
 
-main = Main.new()
+# rubocop:disable Metrics/MethodLength
+def user_select # rubocop:disable Metrics/CyclomaticComplexity
+  selection = gets.chomp
+  case selection
+  when '1'
+    app.list_books
+    run
+  when '2'
+    app.list_people
+    run
+  when '3'
+    app.create_person
+    run
+  when '4'
+    app.create_book
+    run
+  when '5'
+    app.create_rental
+    run
+  when '6'
+    app.list_rental
+    run
+  when '7'
+    abort
+  else
+    puts 'Please Select a correct number'
+  end
+end
+# rubocop:enable Metrics/MethodLength
+
+main = Main.new
 main.run

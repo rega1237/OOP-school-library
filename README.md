@@ -17,6 +17,10 @@ To get a local copy on this project on your machine follow these steps
 - GitHub: [@githubhandle](https://github.com/rega1237/) 
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/rafael-eduardo-guzman/)
 
+👤 **Mahmoud Makhlouf**
+
+- GitHub: [@devMahmoud](https://github.com/devMahmoud)
+
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
