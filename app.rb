@@ -2,15 +2,17 @@ require './book'
 require './student'
 require './teacher'
 require './rental'
+require './serialize_data'
 
 class App
   attr_reader :books, :people
-  attr_accessor :rentals
+  attr_accessor :rentals, :serialize
 
   def initialize
     @books = []
     @people = []
     @rentals = []
+    @serialize = SerializeData.new
   end
 
   # Method to create a book and push into the array
@@ -140,5 +142,17 @@ class App
     teacher = Teacher.new(specialization, age, name)
     @people.push(teacher)
     puts 'Teacher added successfully'
+  end
+
+  def save_data
+    File.exists?("books.json")
+    File.open("books.json", "a") do |file|
+      serialized_books = []
+      books.each do |book|
+        serialized_books.push(JSON.parse(serialize.book_to_json(book)))
+      end
+      json = JSON.pretty_generate(serialized_books)
+      file.write(json)
+    end
   end
 end
