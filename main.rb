@@ -43,6 +43,7 @@ def user_select # rubocop:disable Metrics/CyclomaticComplexity
     app.list_rental
     run
   when '7'
+    app.save_data
     abort
   else
     puts 'Please Select a correct number'
