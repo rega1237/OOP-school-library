@@ -9,5 +9,13 @@
     "rentals": [
 
     ]
+  },
+  {
+    "json_class": "Teacher",
+    "specialization": "maths",
+    "age": "40",
+    "name": "aaaaa",
+    "parent_permission": true,
+    "id": 927
   }
 ]
