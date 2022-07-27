@@ -1,0 +1,14 @@
+[
+  {
+    "json_class": "Rental",
+    "date": "20/02/2022",
+    "person": 435,
+    "book": "Algebra"
+  },
+  {
+    "json_class": "Rental",
+    "date": "20/03/2022",
+    "person": 330,
+    "book": "Games of Thrones"
+  }
+]
