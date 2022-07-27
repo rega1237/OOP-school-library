@@ -11,7 +11,7 @@ class App
   def initialize
     @books = File.exists?("books.json") ? JSON.parse(File.read("books.json"), create_additions: true) : []
     @people = File.exists?("people.json") ? JSON.parse(File.read("people.json"), create_additions: true) : []
-    @rentals = []
+    @rentals = File.exist?("rentals.json") ? JSON.parse(File.read("rentals.json"), create_additions: true)
   end
 
   # Method to create a book and push into the array
@@ -146,5 +146,6 @@ class App
   def save_data
     File.write('books.json', JSON.pretty_generate(@books))
     File.write('people.json', JSON.pretty_generate(@people))
+    File.write("rentals.json", JSON.pretty_generate(@rentals))
   end
 end
