@@ -11,7 +11,7 @@ class App
   def initialize
     @books = File.exists?("books.json") ? JSON.parse(File.read("books.json"), create_additions: true) : []
     @people = File.exists?("people.json") ? JSON.parse(File.read("people.json"), create_additions: true) : []
-    @rentals = File.exist?("rentals.json") ? JSON.parse(File.read("rentals.json"), create_additions: true)
+    @rentals = File.exist?("rentals.json") ? handle_rentals : []
   end
 
   # Method to create a book and push into the array
@@ -147,5 +147,19 @@ class App
     File.write('books.json', JSON.pretty_generate(@books))
     File.write('people.json', JSON.pretty_generate(@people))
     File.write("rentals.json", JSON.pretty_generate(@rentals))
+  end
+
+  private
+
+  def handle_rentals
+    new_rentals = []
+    rental_convert = JSON.parse(File.read("rentals.json"), create_additions: true)
+      rental_convert.each do |rental|
+        filter_people = @people.filter {|person| person.id == rental[:person_id]}
+        filter_book = @books.filter {|book| book.title == rental[:book_title]}
+        new_rental = Rental.new(rental[:date], filter_people[0], filter_book[0])
+        new_rentals << new_rental
+      end
+    new_rentals
   end
 end
